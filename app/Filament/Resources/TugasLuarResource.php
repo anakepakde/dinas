@@ -6,6 +6,7 @@ use App\Filament\Resources\TugasLuarResource\Pages;
 use App\Filament\Resources\TugasLuarResource\RelationManagers;
 use App\Models\TugasLuar;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,14 +24,18 @@ class TugasLuarResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->required(),
+                Repeater::make('anggota')
+                ->schema([
+                    Forms\Components\Select::make('user_id')
+                        ->relationship('user', 'name')
+                        ->required(),
+                ]),
                 Forms\Components\Select::make('kategori_tugas')
                     ->options([
                         'Tim' => 'Tim',
                         'Individu' => 'Individu',
-                    ]),
+                    ])
+                    ->required(),
                 Forms\Components\TextInput::make('tempat_tugas')
                     ->required()
                     ->maxLength(255),
