@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tugas_luars', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class, 'user_id');
+            $table->foreignIdFor(\App\Models\Anggota::class, 'anggota_id');
             $table->string('kategori_tugas');
             $table->string('tempat_tugas');
             $table->date('tanggal_terima_tugas');
