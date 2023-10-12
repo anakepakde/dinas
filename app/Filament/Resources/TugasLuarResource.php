@@ -7,6 +7,7 @@ use App\Filament\Resources\TugasLuarResource\RelationManagers;
 use App\Models\TugasLuar;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -24,27 +25,33 @@ class TugasLuarResource extends Resource
     {
         return $form
             ->schema([
-                Repeater::make('anggota')
-                ->schema([
-                    Forms\Components\Select::make('user_id')
-                        ->relationship('user', 'name')
-                        ->required(),
-                ]),
-                Forms\Components\Select::make('kategori_tugas')
-                    ->options([
-                        'Tim' => 'Tim',
-                        'Individu' => 'Individu',
-                    ])
-                    ->required(),
-                Forms\Components\TextInput::make('tempat_tugas')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('tanggal_terima_tugas')
-                    ->required(),
-                Forms\Components\DatePicker::make('tanggal_mulai_tugas')
-                    ->required(),
-                Forms\Components\DatePicker::make('tanggal_selesai_tugas')
-                    ->required(),
+                        // Repeater::make('anggota')
+                        // ->simple(
+                        //     TextInput::make('anggota')
+                        //     ->required(),
+                        // ),
+                        Forms\Components\Select::make('anggota_id')
+                            ->relationship('anggota', 'nama')
+                            ->required()
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('nama')
+                                ->required(),
+                            ]),
+                        Forms\Components\Select::make('kategori_tugas')
+                            ->options([
+                                'Tim' => 'Tim',
+                                'Individu' => 'Individu',
+                            ])
+                            ->required(),
+                        Forms\Components\TextInput::make('tempat_tugas')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\DatePicker::make('tanggal_terima_tugas')
+                            ->required(),
+                        Forms\Components\DatePicker::make('tanggal_mulai_tugas')
+                            ->required(),
+                        Forms\Components\DatePicker::make('tanggal_selesai_tugas')
+                            ->required(),
             ]);
     }
 
@@ -68,14 +75,6 @@ class TugasLuarResource extends Resource
                 Tables\Columns\TextColumn::make('tanggal_selesai_tugas')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -83,6 +82,7 @@ class TugasLuarResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -93,14 +93,14 @@ class TugasLuarResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -109,5 +109,5 @@ class TugasLuarResource extends Resource
             'view' => Pages\ViewTugasLuar::route('/{record}'),
             'edit' => Pages\EditTugasLuar::route('/{record}/edit'),
         ];
-    }    
+    }
 }
