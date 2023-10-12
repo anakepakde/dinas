@@ -34,16 +34,16 @@ class TugasLuarResource extends Resource
             //     ->relationship('anggota', 'nama')
             //     ->required(),
             //     ]),
-            // Forms\Components\Select::make('anggota_id')
-            //     ->relationship('anggota', 'nama')
-            //     ->required()
-            //     ->createOptionForm([
-            //         Forms\Components\TextInput::make('nama')
-            //         ->required(),
-            //     ]),
             Forms\Components\Select::make('anggota_id')
                 ->relationship('anggota', 'nama')
-                ->required(),
+                ->required()
+                ->createOptionForm([
+                    Forms\Components\TextInput::make('nama')
+                    ->required(),
+                ]),
+            // Forms\Components\Select::make('anggota_id')
+            //     ->relationship('anggota', 'nama')
+            //     ->required(),
                 Forms\Components\Select::make('kategori_tugas')
                     ->options([
                         'Tim' => 'Tim',
