@@ -6,14 +6,17 @@ use App\Filament\Resources\TugasLuarResource\Pages;
 use App\Filament\Resources\TugasLuarResource\RelationManagers;
 use App\Models\TugasLuar;
 use Filament\Forms;
+use Filament\Forms\Components\Builder as ComponentsBuilder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Schema\Builder as SchemaBuilder;
 
 class TugasLuarResource extends Resource
 {
@@ -25,23 +28,27 @@ class TugasLuarResource extends Resource
     {
         return $form
             ->schema([
-                        // Repeater::make('anggota')
-                        // ->simple(
-                        //     TextInput::make('anggota')
-                        //     ->required(),
-                        // ),
-                        Forms\Components\Select::make('anggota_id')
-                            ->relationship('anggota', 'nama')
-                            ->required()
-                            ->createOptionForm([
-                                Forms\Components\TextInput::make('nama')
-                                ->required(),
-                            ]),
-                        Forms\Components\Select::make('kategori_tugas')
-                            ->options([
-                                'Tim' => 'Tim',
-                                'Individu' => 'Individu',
-                            ])
+            // Repeater::make('anggota')
+            // ->simple([
+            //     Forms\Components\Select::make('anggota_id')
+            //     ->relationship('anggota', 'nama')
+            //     ->required(),
+            //     ]),
+            // Forms\Components\Select::make('anggota_id')
+            //     ->relationship('anggota', 'nama')
+            //     ->required()
+            //     ->createOptionForm([
+            //         Forms\Components\TextInput::make('nama')
+            //         ->required(),
+            //     ]),
+            Forms\Components\Select::make('anggota_id')
+                ->relationship('anggota', 'nama')
+                ->required(),
+                Forms\Components\Select::make('kategori_tugas')
+                    ->options([
+                        'Tim' => 'Tim',
+                        'Individu' => 'Individu',
+                    ])
                             ->required(),
                         Forms\Components\TextInput::make('tempat_tugas')
                             ->required()
@@ -52,14 +59,14 @@ class TugasLuarResource extends Resource
                             ->required(),
                         Forms\Components\DatePicker::make('tanggal_selesai_tugas')
                             ->required(),
-            ]);
+                            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('anggota.nama')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('kategori_tugas')
