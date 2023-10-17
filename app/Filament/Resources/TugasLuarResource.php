@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TugasLuarResource\Pages;
 use App\Filament\Resources\TugasLuarResource\RelationManagers;
+use App\Models\Anggota;
 use App\Models\TugasLuar;
 use Filament\Forms;
 use Filament\Forms\Components\Builder as ComponentsBuilder;
@@ -44,6 +45,7 @@ class TugasLuarResource extends Resource
             // Forms\Components\Select::make('anggota_id')
             //     ->relationship('anggota', 'nama')
             //     ->required(),
+
                 Forms\Components\Select::make('kategori_tugas')
                     ->options([
                         'Tim' => 'Tim',
