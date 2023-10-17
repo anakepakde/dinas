@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TugasLuarResource\Pages;
 use App\Filament\Resources\TugasLuarResource\RelationManagers;
+use App\Models\Anggota;
 use App\Models\TugasLuar;
 use Filament\Forms;
 use Filament\Forms\Components\Builder as ComponentsBuilder;
@@ -28,38 +29,39 @@ class TugasLuarResource extends Resource
     {
         return $form
             ->schema([
-            // Repeater::make('anggota')
-            // ->simple([
-            //     Forms\Components\Select::make('anggota_id')
-            //     ->relationship('anggota', 'nama')
-            //     ->required(),
-            //     ]),
-            // Forms\Components\Select::make('anggota_id')
-            //     ->relationship('anggota', 'nama')
-            //     ->required()
-            //     ->createOptionForm([
-            //         Forms\Components\TextInput::make('nama')
-            //         ->required(),
-            //     ]),
-            Forms\Components\Select::make('anggota_id')
-                ->relationship('anggota', 'nama')
-                ->required(),
+                // Repeater::make('anggota')
+                // ->schema([
+                //     Forms\Components\Select::make('anggota_id')
+                //     ->relationship('anggota', 'nama')
+                //     ->options(Anggota::all()->pluck('nama', 'id'))
+                //     ->searchable()
+                //     ->required(),
+                //     ]),
+                Forms\Components\Select::make('anggota_id')
+                    ->relationship('anggota', 'nama')
+                    ->multiple()
+                    ->options(Anggota::all()->pluck('nama', 'id'))
+                    ->required(),
+
+                // Forms\Components\Select::make('anggota_id')
+                //     ->relationship('anggota', 'nama')
+                //     ->required(),
                 Forms\Components\Select::make('kategori_tugas')
                     ->options([
                         'Tim' => 'Tim',
                         'Individu' => 'Individu',
                     ])
-                            ->required(),
-                        Forms\Components\TextInput::make('tempat_tugas')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\DatePicker::make('tanggal_terima_tugas')
-                            ->required(),
-                        Forms\Components\DatePicker::make('tanggal_mulai_tugas')
-                            ->required(),
-                        Forms\Components\DatePicker::make('tanggal_selesai_tugas')
-                            ->required(),
-                            ]);
+                    ->required(),
+                Forms\Components\TextInput::make('tempat_tugas')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\DatePicker::make('tanggal_terima_tugas')
+                    ->required(),
+                Forms\Components\DatePicker::make('tanggal_mulai_tugas')
+                    ->required(),
+                Forms\Components\DatePicker::make('tanggal_selesai_tugas')
+                    ->required(),
+            ]);
     }
 
     public static function table(Table $table): Table
