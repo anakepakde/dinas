@@ -49,7 +49,7 @@ class TugasLuarResource extends Resource
                         'Tim' => 'Tim',
                         'Individu' => 'Individu',
                     ])
-                            ->required(),
+                            ->required(), 
                         Forms\Components\TextInput::make('tempat_tugas')
                             ->required()
                             ->maxLength(255),
